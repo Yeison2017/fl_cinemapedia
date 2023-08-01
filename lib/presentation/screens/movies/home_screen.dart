@@ -37,11 +37,59 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    // final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final slideShowMovies = ref.watch(moviesSlideshowProvider);
 
-    return Column(
-      children: [const CustomAppBar(), MovieSlideshow(movies: slideShowMovies)],
-    );
+    return CustomScrollView(slivers: [
+      const SliverAppBar(
+        floating: true,
+        flexibleSpace: FlexibleSpaceBar(
+          title: CustomAppBar(),
+        ),
+      ),
+      SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+        return Column(
+          children: [
+            MovieSlideshow(movies: slideShowMovies),
+            MoviewHorizontalListView(
+              movies: nowPlayingMovies,
+              title: 'En cines',
+              subTitle: 'Lunes',
+              loadNextPage: () {
+                ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+              },
+            ),
+            MoviewHorizontalListView(
+              movies: nowPlayingMovies,
+              title: 'Próximamente',
+              subTitle: 'En este mes',
+              loadNextPage: () {
+                ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+              },
+            ),
+            MoviewHorizontalListView(
+              movies: nowPlayingMovies,
+              title: 'Populares',
+              // subTitle: 'En este mes',
+              loadNextPage: () {
+                ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+              },
+            ),
+            MoviewHorizontalListView(
+              movies: nowPlayingMovies,
+              title: 'Mejor calificadas',
+              subTitle: 'Desde siempre',
+              loadNextPage: () {
+                ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            )
+          ],
+        );
+      }, childCount: 1))
+    ]);
   }
 }
