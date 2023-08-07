@@ -1,6 +1,6 @@
 class MovieDetails {
   final bool adult;
-  final String backdropPath;
+  final String? backdropPath;
   final BelongsToCollection? belongsToCollection;
   final int budget;
   final List<Genre> genres;
@@ -125,7 +125,7 @@ class BelongsToCollection {
   final int id;
   final String name;
   final String posterPath;
-  final String backdropPath;
+  final String? backdropPath;
 
   BelongsToCollection({
     required this.id,
